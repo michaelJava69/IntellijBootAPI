@@ -2,14 +2,12 @@ package org.rbsg.service;
 
 
 import org.apache.log4j.Logger;
-//import org.rbsg.java.controller.PrimesController;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
- 
 import java.util.LinkedList;
 import java.util.List;
+
+//import org.rbsg.java.controller.PrimesController;
 
 
  

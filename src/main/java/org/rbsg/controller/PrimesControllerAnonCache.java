@@ -1,15 +1,20 @@
 package org.rbsg.controller;
 
 import org.apache.log4j.Logger;
+
+ 
 import org.rbsg.model.PrimesResponse;
 import org.rbsg.service.PrimeNumberService;
+//import org.rbsg.service.PrimeService;
+import org.springframework.cache.annotation.Cacheable;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-//import org.rbsg.java.model.PrimesResponse;
-//import org.rbsg.java.service.PrimeNumberService;
+//import java.util.ArrayList;  
+//import java.util.List;  
 
 //import net.sf.ehcache.Cache;
 //import net.sf.ehcache.CacheManager;
@@ -28,20 +33,21 @@ import org.springframework.web.bind.annotation.RestController;
  * Whenever you request resource as json with accept�headers=�Accept=application/json�, then 
  * Jackson2JsonMessageConverter comes into picture and convert resource to json format.
  *  
- *  http://localhost:8080/primes/10
+ *  Run : http://localhost:8080/primesanoncache/10
  *  
  */
  
 //@Controller 
+
 /*
  * will not work. Results in https//localhost:8080/restServiceApi/primes/primes/10 
  */
 
-@RestController 
-@RequestMapping("/primes")
-public class   PrimesController {
+@RestController  
+@RequestMapping("/primesanoncache")
+public class PrimesControllerAnonCache {
 
-	final static Logger logger = Logger.getLogger(PrimesController.class);
+	final static Logger logger = Logger.getLogger(PrimesControllerAnonCache.class);
 
 	    /*
          * Method for the PrimesController class
@@ -54,20 +60,9 @@ public class   PrimesController {
          */
 	
 	     @RequestMapping(value = "/{upperLimit}", method = RequestMethod.GET,headers="Accept=application/json")
-	     // @ResponseBody since Spring 
-	     /*
-	      * Catching annotations describing what is being put into cache
-	      **/
-	     // @Cacheable(value = "primes", key = "#upperLimit")
+	     @Cacheable(value = "primes", key = "#upperLimit")
 	     public PrimesResponse getPrimeNumbers(@PathVariable Integer upperLimit ) {
 	   	
-	     
-
-	   	 // Ehcache not working so my custom cache
-	     // CacheManager.getInstance().addCache("xyz"); // creates a cache called xyz.
-	     
-	   	  
-	   	 
 	        
 	   	 logger.info(" **** Test : Inside PrimeController  ***"); 
 	   	  
@@ -81,28 +76,15 @@ public class   PrimesController {
 	   	  * the call outside of the cache
 	   	  * 
 	   	  */
-	   	 //    Cache xyz = CacheManager.getInstance().getCache("primes");
-	      
-	   	  //Check
-	 //     if (xyz.get(upperLimit)==null) {
-	   	       
-	 //  		   logger.info( "Getting data outside of the cachce.********....." );
-	   		
-	 //  	       primesResponse = new PrimesResponse(upperLimit, primeService.getPrimeNumbers(upperLimit));
-	 //   	     xyz.put(new Element(upperLimit, primesResponse));
-	 //     }else{
-	   		 
-	 //    		 logger.info("Test : Inside my Cache.********");
-	   		 
-	 //   		 Element e = xyz.get(upperLimit);
-	 //   		 primesResponse =  (PrimesResponse)   e.getObjectValue();
-	 //     }
-	         
-	         
-	         PrimeNumberService primeService = new PrimeNumberService();
-	         final PrimesResponse primesResponse; 
-	         primesResponse = new PrimesResponse(upperLimit, primeService.getPrimeNumbers(upperLimit));
-	          
-	         return primesResponse   ;
+	   	 
+	       PrimesResponse primesResponse; 
+	       //Cache xyz = CacheManager.getInstance().getCache("primes");
+	       PrimeNumberService primeService = new PrimeNumberService();
+	       logger.info( "Getting data outside of the cachce.********....." );
+	   	  
+       	       
+	       primesResponse = new PrimesResponse(upperLimit, primeService.getPrimeNumbers(upperLimit));           
+	       return primesResponse   ;
 	     }
 }
+

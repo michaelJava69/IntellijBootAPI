@@ -2,12 +2,10 @@ package org.rbsg.model;
 
 /**
  * Created by micha on 22/06/2017.
+ *
+ *
  */
-/**
 
- * Created by XTL on 8/14/2014.
-
- */
 
 public class Widget {
 

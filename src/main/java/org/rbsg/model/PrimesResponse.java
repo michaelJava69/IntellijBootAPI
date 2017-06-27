@@ -1,11 +1,9 @@
 package org.rbsg.model;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.apache.log4j.Logger;
 //import org.rbsg.java.controller.PrimesController;
 
 //@XmlRootElement(name = "primesResponse")

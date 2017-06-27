@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.rbsg.service.PrimeNumberService;
 
 import java.util.List;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 // import static org.fest.assertions.Assertions.assertThat;
 
